@@ -1,0 +1,89 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import {
+  Bell, BriefcaseBusiness, ChevronDown, CircleHelp, Compass, FolderKanban,
+  LayoutDashboard, LogOut, Menu, Search, Settings, Sparkles, UserRound, X,
+} from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { Brand } from '@/components/brand';
+import { Avatar } from '@/components/avatar';
+import type { Profile } from '@/lib/types';
+
+const navItems = [
+  { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
+  { href: '/dashboard/projects', label: 'My projects', icon: FolderKanban },
+  { href: '/dashboard/profile', label: 'My profile', icon: UserRound },
+];
+
+export function AppShell({ profile, children }: { profile: Profile; children: React.ReactNode }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [search, setSearch] = useState('');
+  const [signingOut, setSigningOut] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  async function signOut() {
+    setSigningOut(true);
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push('/');
+    router.refresh();
+  }
+
+  function submitSearch(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    router.push(`/dashboard/projects${search.trim() ? `?q=${encodeURIComponent(search.trim())}` : ''}`);
+    setMobileOpen(false);
+  }
+
+  const sidebar = (
+    <>
+      <div className="sidebar-brand"><Brand /></div>
+      <div className="workspace-switcher">
+        <span className="workspace-avatar">W</span>
+        <span className="workspace-copy"><strong>Wale University</strong><small>Student workspace</small></span>
+        <ChevronDown size={15} />
+      </div>
+      <div className="sidebar-section-label">WORKSPACE</div>
+      <nav className="sidebar-nav" aria-label="Main navigation">
+        {navItems.map(({ href, label, icon: Icon }) => {
+          const active = href === '/dashboard' ? pathname === href : pathname.startsWith(href);
+          return <Link onClick={() => setMobileOpen(false)} key={href} href={href} className={`nav-link ${active ? 'active' : ''}`}><Icon size={18} /><span>{label}</span></Link>;
+        })}
+      </nav>
+      <div className="sidebar-section-label sidebar-section-spaced">DISCOVER</div>
+      <nav className="sidebar-nav">
+        <div className="nav-link nav-link-static"><Compass size={18} /><span>Project discovery</span><span className="nav-coming">Phase 4</span></div>
+        <Link href="/dashboard#challenges" className="nav-link"><BriefcaseBusiness size={18} /><span>Challenges</span><span className="nav-coming">Soon</span></Link>
+        <Link href="/dashboard#ai-assistant" className="nav-link"><Sparkles size={18} /><span>AI assistant</span><span className="nav-coming">Soon</span></Link>
+      </nav>
+      <div className="sidebar-bottom">
+        <Link href="/dashboard/settings" className={`nav-link ${pathname.startsWith('/dashboard/settings') ? 'active' : ''}`}><Settings size={18} /><span>Settings</span></Link>
+        <div className="nav-link nav-link-static" title="Support contact will be configured before launch"><CircleHelp size={18} /><span>Help & feedback</span><span className="nav-coming">Soon</span></div>
+        <div className="sidebar-user">
+          <Avatar name={profile.full_name} image={profile.avatar_url} size="sm" />
+          <div className="sidebar-user-copy"><strong>{profile.full_name || 'Student'}</strong><small>{profile.department || 'Student account'}</small></div>
+          <button className="icon-button logout-button" title="Sign out" aria-label="Sign out" onClick={signOut} disabled={signingOut}><LogOut size={16} /></button>
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <div className="app-shell">
+      <aside className={`sidebar ${mobileOpen ? 'sidebar-open' : ''}`}>{sidebar}</aside>
+      {mobileOpen && <button className="mobile-scrim" aria-label="Close navigation" onClick={() => setMobileOpen(false)} />}
+      <div className="app-main">
+        <header className="app-topbar">
+          <button className="icon-button mobile-menu-button" aria-label={mobileOpen ? 'Close menu' : 'Open menu'} onClick={() => setMobileOpen(!mobileOpen)}>{mobileOpen ? <X size={20} /> : <Menu size={20} />}</button>
+          <form className="topbar-search" onSubmit={submitSearch}><Search size={17} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search your projects..." /><kbd>⌘ K</kbd></form>
+          <div className="topbar-actions"><Link className="icon-button notification-button" href="/dashboard/notifications" aria-label="Notifications"><Bell size={18} /></Link><div className="topbar-divider" /><Link className="topbar-profile" href="/dashboard/profile"><Avatar name={profile.full_name} image={profile.avatar_url} size="sm" /><span>{profile.full_name?.split(' ')[0] || 'Profile'}</span></Link></div>
+        </header>
+        <main className="app-content">{children}</main>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,21 @@
+WALEWORKS AI — PHASE 1 MVP
+
+1. Extract this folder to a location you can easily find, such as Documents\WaleWorksAI.
+2. Open VS Code.
+3. Choose File > Open Folder and select the extracted WaleWorksAI folder.
+4. Open the VS Code terminal (Terminal > New Terminal).
+5. Run: npm install
+6. Copy .env.example to .env.local and enter your Supabase Project URL and Publishable key.
+7. In the Supabase SQL Editor, run supabase/schema.sql on a new empty project.
+8. Then run supabase/seed.sql.
+9. In Supabase Authentication URL settings, set Site URL to http://localhost:3000 and add http://localhost:3000/auth/callback as a redirect URL.
+10. Back in the VS Code terminal, run: npm run dev
+11. Open http://localhost:3000 in your browser.
+
+IMPORTANT:
+- Do not share your database password, Supabase secret key, or service-role key.
+- Never put a service-role key in a NEXT_PUBLIC_ environment variable.
+- This is source code, not a hosted website. A Supabase project and local Node.js installation are required.
+- Phase 1 covers accounts, student profiles, projects, file evidence, visibility and public portfolios. Collaboration, AI assessments, challenges and employer discovery are later phases.
+
+More complete instructions are in README.md.
