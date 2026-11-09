@@ -9,8 +9,11 @@ export default async function WorkSimulationsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/auth/login');
-  const { data: profile } = await supabase.from('profiles').select('career_interests, primary_career_path').eq('id', user.id).single();
-  const { data: attempts, error: attemptsError } = await supabase.from('work_simulation_attempts').select('simulation_slug, score, created_at').eq('user_id', user.id).order('created_at', { ascending: false });
+const { data: profile } = await supabase
+  .from('profiles')
+  .select('career_interests, primary_career_path, target_roles')
+  .eq('id', user.id)
+  .single();  const { data: attempts, error: attemptsError } = await supabase.from('work_simulation_attempts').select('simulation_slug, score, created_at').eq('user_id', user.id).order('created_at', { ascending: false });
   const selectedPaths = (profile?.career_interests ?? []) as string[];
   const primaryPath = profile?.primary_career_path as string | null;
   const targetRoles = (profile?.target_roles ?? []) as string[];

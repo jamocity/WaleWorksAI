@@ -9,7 +9,12 @@ export const sampleProfile: Profile = {
   academic_level: '400 Level',
   bio: 'Environmental engineering student interested in building practical, affordable solutions for cleaner and more resilient communities.',
   interests: ['Sustainable cities', 'Water systems', 'Climate innovation'],
-  skills: ['Research', 'Project management', 'Data analysis', 'AutoCAD'],
+career_interests: [],
+primary_career_path: null,
+career_stage: 'exploring',
+career_goal: null,
+target_roles: [],
+skills: ['Research', 'Project management', 'Data analysis', 'AutoCAD'],
   achievements: ['Finalist, Wale Innovation Showcase 2026'],
   certifications: ['Introduction to Environmental Impact Assessment'],
   avatar_url: null,
@@ -18,7 +23,8 @@ export const sampleProfile: Profile = {
   is_public: true,
   show_email: false,
   professional_visibility: true,
-  created_at: '2026-09-10T00:00:00.000Z',
+onboarding_complete: true,
+created_at: '2026-09-10T00:00:00.000Z',
 };
 
 export const sampleProjects: Project[] = [

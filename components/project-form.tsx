@@ -124,8 +124,21 @@ export function ProjectForm({ ownerId, initialProject }: { ownerId: string; init
 
       <div className="form-section-title"><span>04</span><div><h2>Progress and visibility</h2><p>You can keep updating this project as it develops.</p></div></div>
       <div className="form-grid">
-        <label className="field-label">Current status<select className="text-input" value={status} onChange={(event) => setStatus(event.target.value)}><option value="planning">Planning</option><option value="in_progress">In progress</option><option value="completed">Completed</option></select></label>
-        <label className="field-label">Who can see this?<select className="text-input" value={visibility} onChange={(event) => setVisibility(event.target.value as typeof visibility)}><option value="private">Private — only me</option><option value="public">Public — shown on my portfolio</option><option value="unlisted">Unlisted — hidden from your portfolio, shared by link</option></select></label>
+<label className="field-label">Current status
+  <select
+    className="text-input"
+    value={status}
+    onChange={(event) =>
+      setStatus(
+        event.target.value as 'planning' | 'in_progress' | 'completed'
+      )
+    }
+  >
+    <option value="planning">Planning</option>
+    <option value="in_progress">In progress</option>
+    <option value="completed">Completed</option>
+  </select>
+</label>        <label className="field-label">Who can see this?<select className="text-input" value={visibility} onChange={(event) => setVisibility(event.target.value as typeof visibility)}><option value="private">Private — only me</option><option value="public">Public — shown on my portfolio</option><option value="unlisted">Unlisted — hidden from your portfolio, shared by link</option></select></label>
       </div>
       {error && <div className="form-alert error" role="alert">{error}</div>}
       <div className="form-actions"><p>Only describe work you actually completed. Unlisted links are not passwords; keep confidential information private.</p><button className="button button-primary" type="submit" disabled={loading}>{loading ? <LoaderCircle size={17} className="spin" /> : <Save size={17} />}{loading ? 'Saving project...' : initialProject ? 'Save changes' : 'Create project'}</button></div>
