@@ -37,6 +37,11 @@ create table public.profiles (
   academic_level text,
   bio text check (char_length(bio) <= 1200),
   interests text[] not null default '{}',
+  career_interests text[] not null default '{}',
+  primary_career_path text,
+  career_stage text not null default 'exploring' check (career_stage in ('exploring','student','portfolio_building','internship_seeking','entry_level','career_switcher')) ,
+  career_goal text,
+  target_roles text[] not null default '{}',
   skills text[] not null default '{}',
   achievements text[] not null default '{}',
   certifications text[] not null default '{}',
@@ -216,6 +221,21 @@ create table public.ai_assessments (
   created_at timestamptz not null default now()
 );
 
+create table public.work_simulation_attempts (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  simulation_slug text not null,
+  career_track text not null,
+  responses jsonb not null default '{}'::jsonb,
+  score integer not null check (score between 0 and 100),
+  feedback jsonb not null default '{}'::jsonb,
+  status text not null default 'submitted' check (status in ('submitted','reviewed')),
+  created_at timestamptz not null default now()
+);
+
+create index work_simulation_attempts_user_created_idx
+  on public.work_simulation_attempts(user_id, created_at desc);
+
 create table public.human_reviews (
   id uuid primary key default gen_random_uuid(),
   project_id uuid not null references public.projects(id) on delete cascade,
@@ -350,6 +370,7 @@ alter table public.student_skills enable row level security;
 alter table public.challenges enable row level security;
 alter table public.challenge_submissions enable row level security;
 alter table public.ai_assessments enable row level security;
+alter table public.work_simulation_attempts enable row level security;
 alter table public.human_reviews enable row level security;
 alter table public.notifications enable row level security;
 alter table public.employer_profiles enable row level security;
@@ -536,6 +557,11 @@ with check (
 -- AI assessment results are owner-only until Phase 3 public review settings and summaries exist.
 create policy "AI assessments visible to owner" on public.ai_assessments for select
 using (student_id = auth.uid());
+
+create policy "Students view own simulation attempts" on public.work_simulation_attempts for select
+using (user_id = auth.uid());
+create policy "Students submit own simulation attempts" on public.work_simulation_attempts for insert
+with check (user_id = auth.uid() and status = 'submitted');
 -- Human reviews stay private to the project owner and reviewer until reviewer identity/consent rules are implemented.
 create policy "Human reviews visible to owner or reviewer" on public.human_reviews for select
 using (
@@ -622,3 +648,4 @@ grant select, insert, update, delete on public.profiles, public.profile_private,
   public.challenges, public.challenge_submissions, public.human_reviews, public.notifications,
   public.employer_profiles to authenticated;
 grant select on public.ai_assessments to authenticated;
+grant select, insert on public.work_simulation_attempts to authenticated;

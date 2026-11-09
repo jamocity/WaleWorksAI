@@ -10,6 +10,11 @@ export type Profile = {
   academic_level: string | null;
   bio: string | null;
   interests: string[];
+  career_interests: string[];
+  primary_career_path: string | null;
+  career_stage: string;
+  career_goal: string | null;
+  target_roles: string[];
   skills: string[];
   achievements: string[];
   certifications: string[];
@@ -19,6 +24,7 @@ export type Profile = {
   is_public: boolean;
   show_email: boolean;
   professional_visibility: boolean;
+  onboarding_complete: boolean;
   created_at: string;
 };
 
