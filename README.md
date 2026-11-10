@@ -106,10 +106,21 @@ The landing page's workspace illustration is sample UI data only. `lib/data.ts` 
 | `/dashboard/profile` | Edit profile, career preferences and portfolio visibility |
 | `/dashboard/work-simulations` | Discover role-based IT workday practice |
 | `/dashboard/work-simulations/[slug]` | Complete a workplace simulation and submit a deliverable |
+| `/dashboard/careers` | Explore role-specific IT career roadmaps and project ideas |
+| `/dashboard/challenges` | Browse published challenges and submit practice work |
+| `/dashboard/challenges/manage` | Mentor/admin challenge creation and publishing |
+| `/dashboard/help` | Submit support requests and feature feedback |
+| `/dashboard/admin/support` | Admin support inbox and request status management |
+| `/dashboard/projects/[id]/workspace` | Manage project milestones and record contributions |
 | `/dashboard/notifications` | Notifications inbox |
 | `/dashboard/settings` | Account and privacy settings |
 | `/u/[username]` | Public student portfolio |
 | `/p/[id]` | Public project detail |
+
+## Additive migrations for existing databases
+
+- `supabase/migrations/20261110_support_requests.sql` creates the private support and feedback inbox. Run it once in Supabase SQL Editor before enabling Help & Feedback submissions. It preserves existing profile and project data.
+- Project milestones and contribution records use the existing `project_milestones` and `contributions` tables. The current project workboard is owner-operated; contributor invitations and invitee acceptance are not yet enabled.
 
 ## Important production checks before inviting real students
 
@@ -129,7 +140,7 @@ The source update includes targeted fixes for avatar persistence, project creati
 
 ## Current implementation boundaries
 
-This is a deployable product codebase, not a hosted production instance. You must connect a Supabase project, run the base schema and seed on a new database (or the career/simulation migration on the existing database), and set environment values before the new career preferences and simulation submissions work. The current simulation scoring is deterministic and transparent; it is not an LLM assessment, an expert review or a certification. Collaboration, AI assessment and employer discovery still require their dedicated server-side workflows.
+This is a deployable product codebase, not a hosted production instance. You must connect a Supabase project, run the base schema and seed on a new database (or the career/simulation migration on the existing database), and set environment values before the new career preferences and simulation submissions work. The current simulation scoring is deterministic and transparent; it is not an LLM assessment, an expert review or a certification. Contributor invitation acceptance, AI assessment and employer discovery still require their dedicated server-side workflows. Mentors/admins can publish challenges; admins can review support request status. Career Discovery, published challenge browsing/submission, private Help & Feedback requests and owner-operated project workboards are available in this update.
 
 ## Career-specific onboarding and workday simulations
 

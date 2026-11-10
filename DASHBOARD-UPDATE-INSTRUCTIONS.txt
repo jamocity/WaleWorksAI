@@ -1,0 +1,49 @@
+WaleWorks AI — Dashboard MVP Update
+
+CONTENTS
+- Career Discovery: role-specific roadmaps, skills, suggested tools, learning stages, project ideas and linked workday simulations.
+- Challenges: student challenge browsing and submission; mentor/admin challenge creation, publication, closing and reopening.
+- Help & Feedback: private support request form and user-owned request history.
+- Admin support inbox: admins can update support request status.
+- Project Workboard: project owners can create/complete/delete milestones and record their own contributions.
+- Navigation and dashboard links updated to point to the real routes.
+
+INSTALL
+1. Back up your current WaleWorksAI folder.
+2. Stop the local dev server (Ctrl+C).
+3. Extract this ZIP directly into the project root — the folder containing package.json.
+4. Allow the existing folders/files to merge and replace matching files.
+5. Do NOT replace .env.local. This ZIP does not contain environment credentials.
+
+DATABASE
+Before using Help & Feedback, run this additive migration once in Supabase SQL Editor:
+  supabase/migrations/20261110_support_requests.sql
+It creates support_requests with Row Level Security. Students can submit and view only their own requests; admins can manage request status. Existing profiles, projects and simulation attempts are not modified.
+
+No new migration is required for Career Discovery, Challenges or Project Workboard if your database already has the WaleWorks base schema with challenges, challenge_submissions, project_milestones and contributions tables.
+
+ROLE REQUIREMENTS
+- All students can browse published challenges and submit to them.
+- Only profiles whose role is mentor or admin can create/manage challenges. A trusted administrator must provision those roles; students should not change their own role.
+- Only profiles whose role is admin can access the support inbox. Student support requests are saved and visible to their owner; status management is an admin operation.
+
+IMPORTANT BOUNDARIES
+- Project Workboard is currently owner-operated: milestones and the owner's contribution log work. Team invitation delivery and invitee acceptance are not enabled yet; the existing invitation table is not a complete invitation workflow.
+- The AI Project Assistant is not connected to an AI provider. The dashboard labels this clearly rather than pretending a deterministic template is AI.
+- Employer verification and talent discovery remain a later phase.
+
+VERIFY LOCALLY
+1. npm run build
+2. npm run dev
+3. Test /dashboard/careers
+4. Test /dashboard/challenges (published challenges appear here; if none exist, the page displays an empty state)
+5. Test /dashboard/help after the SQL migration
+6. Open one owned project and click Project workboard; create and complete a milestone, then record a contribution.
+7. Sign in with a provisioned mentor/admin account to test /dashboard/challenges/manage; use an admin account to test /dashboard/admin/support.
+
+DEPLOY
+Only after the local production build succeeds:
+  git add -A
+  git commit -m "Complete student dashboard MVP workflows"
+  git push origin main
+Vercel should deploy the new main commit automatically.

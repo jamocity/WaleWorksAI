@@ -18,7 +18,7 @@ function describeError(error: unknown) {
   return 'Could not save your project. Please try again.';
 }
 
-export function ProjectForm({ ownerId, initialProject }: { ownerId: string; initialProject?: Project }) {
+export function ProjectForm({ ownerId, initialProject, initialDiscipline }: { ownerId: string; initialProject?: Project; initialDiscipline?: string }) {
   const router = useRouter();
   const [title, setTitle] = useState(initialProject?.title ?? '');
   const [description, setDescription] = useState(initialProject?.description ?? '');
@@ -26,7 +26,7 @@ export function ProjectForm({ ownerId, initialProject }: { ownerId: string; init
   const [objectives, setObjectives] = useState(initialProject?.objectives?.join('\n') ?? '');
   const [methodology, setMethodology] = useState(initialProject?.methodology ?? '');
   const [category, setCategory] = useState(initialProject?.category ?? 'Personal Project');
-  const [discipline, setDiscipline] = useState(initialProject?.discipline ?? 'Software Development');
+  const [discipline, setDiscipline] = useState(initialProject?.discipline ?? (initialDiscipline?.trim() || 'Software Development'));
   const [status, setStatus] = useState(initialProject?.status ?? 'planning');
   const [visibility, setVisibility] = useState(initialProject?.visibility ?? 'private');
   const [skills, setSkills] = useState(initialProject?.skills?.join(', ') ?? '');
@@ -35,7 +35,8 @@ export function ProjectForm({ ownerId, initialProject }: { ownerId: string; init
   const [lessons, setLessons] = useState(initialProject?.lessons_learned ?? '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const disciplineOptions = initialProject && !disciplines.includes(initialProject.discipline) ? [initialProject.discipline, ...disciplines] : disciplines;
+  const selectedDiscipline = initialProject?.discipline ?? initialDiscipline?.trim();
+  const disciplineOptions = selectedDiscipline && !disciplines.includes(selectedDiscipline) ? [selectedDiscipline, ...disciplines] : disciplines;
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

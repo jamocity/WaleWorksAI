@@ -56,13 +56,15 @@ export function AppShell({ profile, children }: { profile: Profile; children: Re
       </nav>
       <div className="sidebar-section-label sidebar-section-spaced">DISCOVER</div>
       <nav className="sidebar-nav">
-        <div className="nav-link nav-link-static"><Compass size={18} /><span>Project discovery</span><span className="nav-coming">Phase 4</span></div>
-        <Link href="/dashboard#challenges" className="nav-link"><BriefcaseBusiness size={18} /><span>Challenges</span><span className="nav-coming">Soon</span></Link>
-        <Link href="/dashboard#ai-assistant" className="nav-link"><Sparkles size={18} /><span>AI assistant</span><span className="nav-coming">Soon</span></Link>
+        <Link onClick={() => setMobileOpen(false)} href="/dashboard/careers" className={`nav-link ${pathname.startsWith('/dashboard/careers') ? 'active' : ''}`}><Compass size={18} /><span>Career discovery</span></Link>
+        <Link onClick={() => setMobileOpen(false)} href="/dashboard/challenges" className={`nav-link ${pathname.startsWith('/dashboard/challenges') ? 'active' : ''}`}><BriefcaseBusiness size={18} /><span>Challenges</span></Link>
+        <Link onClick={() => setMobileOpen(false)} href="/dashboard/work-simulations" className={`nav-link ${pathname.startsWith('/dashboard/work-simulations') ? 'active' : ''}`}><Sparkles size={18} /><span>Workday simulations</span></Link>
       </nav>
       <div className="sidebar-bottom">
         <Link href="/dashboard/settings" className={`nav-link ${pathname.startsWith('/dashboard/settings') ? 'active' : ''}`}><Settings size={18} /><span>Settings</span></Link>
-        <div className="nav-link nav-link-static" title="Support contact will be configured before launch"><CircleHelp size={18} /><span>Help & feedback</span><span className="nav-coming">Soon</span></div>
+        <Link onClick={() => setMobileOpen(false)} href="/dashboard/help" className={`nav-link ${pathname.startsWith('/dashboard/help') ? 'active' : ''}`}><CircleHelp size={18} /><span>Help & feedback</span></Link>
+        {profile.role === 'mentor' || profile.role === 'admin' ? <Link onClick={() => setMobileOpen(false)} href="/dashboard/challenges/manage" className={`nav-link ${pathname.startsWith('/dashboard/challenges/manage') ? 'active' : ''}`}><BriefcaseBusiness size={18}/><span>Manage challenges</span></Link> : null}
+        {profile.role === 'admin' ? <Link onClick={() => setMobileOpen(false)} href="/dashboard/admin/support" className={`nav-link ${pathname.startsWith('/dashboard/admin/support') ? 'active' : ''}`}><CircleHelp size={18}/><span>Support inbox</span></Link> : null}
         <div className="sidebar-user">
           <Avatar name={profile.full_name} image={profile.avatar_url} size="sm" />
           <div className="sidebar-user-copy"><strong>{profile.full_name || 'Student'}</strong><small>{profile.department || 'Student account'}</small></div>
