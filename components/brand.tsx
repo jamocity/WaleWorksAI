@@ -1,11 +1,17 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { Layers3 } from 'lucide-react';
 
 export function Brand({ compact = false }: { compact?: boolean }) {
   return (
-    <Link href="/" className="brand-lockup" aria-label="WaleWorks AI home">
-      <span className="brand-mark"><Layers3 size={21} strokeWidth={2.4} /></span>
-      {!compact && <span className="brand-name">WaleWorks<span>AI</span></span>}
+    <Link href="/" className={`brand-lockup${compact ? ' brand-lockup-compact' : ''}`} aria-label="WaleWorks AI home">
+      <Image
+        src={compact ? '/brand/waleworks-ai-mark.png' : '/brand/waleworks-ai-logo.png'}
+        alt="WaleWorks AI"
+        width={compact ? 470 : 780}
+        height={compact ? 310 : 425}
+        className="brand-logo-image"
+        priority
+      />
     </Link>
   );
 }

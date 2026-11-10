@@ -496,6 +496,79 @@ export const WORK_SIMULATIONS: WorkSimulation[] = [
     deliverablePrompt: 'Summarise the user problem, affected users, current workflow, questions still open, one draft user story, two testable acceptance criteria and the data/privacy dependency.',
     rubric: ['Defines the problem before proposing a solution.', 'Identifies users and current workflow.', 'Uses testable acceptance criteria.', 'Makes dependencies and assumptions visible.'],
   },
+
+  {
+    slug: 'project-delivery-plan-recovery',
+    title: 'The delivery plan starts slipping',
+    role: 'Junior Project Coordinator',
+    careerTrack: 'Project Management',
+    level: 'Beginner',
+    duration: '35–45 min',
+    workplace: 'You coordinate a small digital-service project with a project manager, designer, two developers and an external integration provider.',
+    brief: 'The team planned to pilot a new student request portal on Friday. On Tuesday morning, the external integration provider reports a two-day delay, the test dataset is incomplete and the designer has not approved the final mobile flow. A department stakeholder asks whether Friday is still guaranteed. Your project manager is in a steering meeting and asks you to prepare an evidence-based status update and recovery options. Do not hide risks or promise a date the team has not validated.',
+    objective: 'Practise schedule tracking, dependency management, risk escalation, scope control and clear stakeholder reporting.',
+    dayPlan: [
+      { time: '09:00', activity: 'Review the project brief, milestone plan, owners and previous status update.' },
+      { time: '09:20', activity: 'Confirm the integration delay, test-data gap and pending design approval with their owners.' },
+      { time: '10:00', activity: 'Map which milestones and downstream tasks are affected by each dependency.' },
+      { time: '11:00', activity: 'Prepare recovery options, decision points and a refreshed risk/issue log.' },
+      { time: '12:00', activity: 'Send a concise status update that distinguishes confirmed facts from estimates.' },
+    ],
+    questions: [
+      {
+        id: 'validate-status',
+        prompt: 'What should you do first before telling the stakeholder whether Friday is still achievable?',
+        options: [
+          { id: 'confirm-evidence', label: 'Confirm the current status, owner, expected resolution and downstream dependency for each blocker, then compare the evidence with the approved plan.' },
+          { id: 'promise-friday', label: 'Confirm Friday immediately to protect stakeholder confidence.' },
+          { id: 'move-everything', label: 'Move every task by two days without checking which tasks depend on the integration.' },
+        ],
+        correctOptionId: 'confirm-evidence',
+        explanation: 'A coordinator should validate status with task owners and trace dependencies before communicating a schedule impact. A reported delay does not automatically move every task by the same amount.',
+      },
+      {
+        id: 'scope-pressure',
+        prompt: 'A stakeholder suggests skipping mobile testing so the team can keep Friday. What is the most responsible response?',
+        options: [
+          { id: 'assess-tradeoff', label: 'Record the proposal, assess user and quality risks with the delivery team, and ask the authorised project manager and product owner to approve any scope or release trade-off.' },
+          { id: 'skip-testing', label: 'Remove mobile testing from the plan and update the launch date as confirmed.' },
+          { id: 'ignore-testing', label: 'Leave the testing milestone unchanged in the plan but quietly do not complete it.' },
+        ],
+        correctOptionId: 'assess-tradeoff',
+        explanation: 'Scope and quality changes require transparent impact assessment and approval. Do not silently remove a control or represent an unapproved change as agreed.',
+      },
+      {
+        id: 'recovery-options',
+        prompt: 'Which recovery option is most useful to present to the project manager?',
+        options: [
+          { id: 'options-with-impact', label: 'Present realistic options with their schedule, quality, resource and dependency impacts, naming the decision owner for each.' },
+          { id: 'work-overtime', label: 'Tell the team to work overtime until Friday without checking capacity or approval.' },
+          { id: 'change-baseline', label: 'Change the baseline date in the project tracker so the project appears on schedule.' },
+        ],
+        correctOptionId: 'options-with-impact',
+        explanation: 'A useful recovery proposal makes trade-offs visible and leaves authorised decisions with the correct owner. Updating the plan must reflect an approved decision, not conceal variance.',
+      },
+      {
+        id: 'stakeholder-update',
+        prompt: 'What should your stakeholder update say while the recovery options are still being reviewed?',
+        options: [
+          { id: 'transparent-update', label: 'State the current risks, confirmed blockers, affected milestones, actions and owners, the decision still required and when the next update will be sent.' },
+          { id: 'vague-update', label: 'Say the project is progressing well and the team is handling a few small issues.' },
+          { id: 'blame-provider', label: 'Blame the external provider and say the internal team has no responsibility for the outcome.' },
+        ],
+        correctOptionId: 'transparent-update',
+        explanation: 'Good reporting is timely, factual and action-oriented. It should identify what is known, what remains uncertain, who owns the next action and when stakeholders will hear more.',
+      },
+    ],
+    deliverableTitle: 'Prepare a project status and recovery update',
+    deliverablePrompt: 'Write a short project update that includes overall status, completed work, the three current blockers, affected milestones and dependencies, owners and next actions, two realistic recovery options with trade-offs, the decision required, and the next update time. Separate confirmed facts from estimates.',
+    rubric: [
+      'Reports progress and blockers accurately without hiding schedule variance.',
+      'Connects each blocker to its owner, dependency and affected milestone.',
+      'Presents realistic recovery options and makes scope/quality trade-offs explicit.',
+      'Identifies decision ownership and gives stakeholders a clear next update time.',
+    ],
+  },
 ];
 
 export function getWorkSimulation(slug: string) {

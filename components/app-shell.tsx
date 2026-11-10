@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   Bell, BriefcaseBusiness, ChevronDown, CircleHelp, Compass, FolderKanban,
-  LayoutDashboard, LogOut, Menu, Search, Settings, Sparkles, UserRound, X,
+  LayoutDashboard, LogOut, Menu, Search, Settings, Sparkles, UserRound, UsersRound, X,
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Brand } from '@/components/brand';
@@ -16,6 +16,7 @@ const navItems = [
   { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
   { href: '/dashboard/projects', label: 'My projects', icon: FolderKanban },
   { href: '/dashboard/profile', label: 'My profile', icon: UserRound },
+  { href: '/dashboard/invitations', label: 'Team invitations', icon: UsersRound },
 ];
 
 export function AppShell({ profile, children }: { profile: Profile; children: React.ReactNode }) {

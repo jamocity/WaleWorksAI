@@ -1,0 +1,61 @@
+WALEWORKS AI — BRANDING + PROJECT MANAGEMENT UPDATE
+
+WHAT THIS UPDATE CHANGES
+
+1) Official WaleWorks AI logo
+- Replaces the old generic icon/text brand lockup with the supplied WaleWorks AI logo.
+- The shared Brand component is used on the marketing header/footer, dashboard sidebar, authentication panel, onboarding, public student portfolio and public project pages.
+- Adds a cropped logo mark for the landing-page workspace preview.
+- Adds app/icon.png and app/apple-icon.png for browser tab and Apple home-screen icons.
+
+2) New career direction: Project Management
+- Adds Project Management to the shared career-direction list used by profile/onboarding and challenge publishing.
+- Adds target roles: Junior Project Coordinator, Project Coordinator, PMO Analyst, Associate Project Manager and Agile Project Coordinator.
+- Adds a project-management career roadmap with foundations, tools, learning stages and portfolio project ideas.
+- Adds a dedicated workday simulation: "The delivery plan starts slipping" for a Junior Project Coordinator.
+- Updates Career Discovery and Workday Simulations page descriptions to include project delivery.
+
+INSTALLATION
+
+1. Back up your current WaleWorksAI project folder.
+2. Stop the local Next.js server with Ctrl+C.
+3. Extract this ZIP directly into the project root:
+   C:\Users\Jamiu\Documents\WaleWorksAI
+   This is the folder containing package.json.
+4. Allow the folders to merge and replace the matching files.
+5. Do NOT replace .env.local. This update does not include it.
+6. No Supabase SQL migration is required for these changes.
+
+VALIDATION
+
+From the project root, run:
+
+  npm run build
+
+Then run:
+
+  npm run dev
+
+Check the following:
+- Landing page and dashboard sidebar display the new logo.
+- Login, signup, onboarding, public portfolio and public project pages display the logo.
+- Browser tab displays the WaleWorks symbol icon.
+- Profile career preferences include Project Management.
+- Career Discovery displays its roadmap and five target roles.
+- Workday Simulations includes "The delivery plan starts slipping".
+- Challenge publishing includes Project Management as a career area.
+
+DEPLOYMENT
+
+After the build succeeds and the local checks pass:
+
+  git add -A
+  git commit -m "Add WaleWorks branding and project management career path"
+  git push origin main
+
+Vercel should deploy the new commit from the main branch.
+
+SAFETY
+- No database schema is changed.
+- No existing profile, project, account or simulation attempt is deleted.
+- Keep .env.local private and out of Git.

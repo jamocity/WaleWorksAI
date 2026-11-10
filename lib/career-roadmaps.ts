@@ -138,6 +138,19 @@ export const CAREER_ROADMAPS: Record<string, CareerRoadmap> = {
     ],
     portfolioProjects: ['Requirements pack for a campus service app', 'Current-to-future process map', 'Prioritised product backlog with acceptance criteria'],
   },
+  'Project Management': {
+    summary: 'Plan and coordinate work from a clear objective to a completed outcome by managing scope, schedules, dependencies, risks and communication.',
+    outcomes: ['Translate goals into deliverables and workable plans', 'Track milestones, dependencies, risks and decisions', 'Keep stakeholders informed with accurate project updates'],
+    foundations: ['Project objectives, scope and deliverables', 'Work breakdown structures, estimates and schedules', 'Milestones, dependencies and critical-path awareness', 'Risk, assumptions, issues and dependencies (RAID)', 'Stakeholder communication and status reporting', 'Agile, predictive and hybrid delivery approaches'],
+    tools: ['Jira / Trello / Asana', 'Microsoft Project / ProjectLibre', 'Excel / Google Sheets', 'Gantt charts and Kanban boards', 'Notion / Confluence', 'RACI and RAID logs'],
+    stages: [
+      { title: 'Understand project fundamentals', detail: 'Define the objective, expected outcomes, scope boundaries, stakeholders, constraints and what successful delivery means.' },
+      { title: 'Build a realistic plan', detail: 'Break the work into tasks, identify dependencies, estimate effort, assign owners, set milestones and record delivery risks.' },
+      { title: 'Coordinate delivery', detail: 'Run focused check-ins, update the plan from evidence, follow up blockers, record decisions and escalate changes that affect scope or timing.' },
+      { title: 'Report and learn', detail: 'Write concise status reports, compare planned and actual outcomes, capture lessons and explain what should change next time.' },
+    ],
+    portfolioProjects: ['A project initiation brief, work breakdown structure and risk register for a campus event', 'A sprint board and milestone plan for a small software project', 'A weekly status report pack showing progress, dependencies, decisions and lessons learned'],
+  },
   'Technical Writing': {
     summary: 'Make complex technical information understandable, accurate and useful to its intended audience.',
     outcomes: ['Write clear task-based documentation', 'Structure information for discovery', 'Validate instructions with users or technical owners'],

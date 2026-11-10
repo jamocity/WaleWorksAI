@@ -1,0 +1,66 @@
+WALEWORKS AI — PROJECT COLLABORATION UPDATE
+============================================
+
+This is a patch for the latest WaleWorks AI project source and the Dashboard Completion Update. It adds consent-based project invitations and practical team collaboration.
+
+INSTALLATION
+------------
+1. Back up your current WaleWorksAI folder.
+2. Stop the local Next.js server (Ctrl+C).
+3. Extract this ZIP into the project root — the folder containing package.json.
+4. Merge folders and replace the listed matching files.
+5. Do not replace .env.local or any Supabase credentials.
+6. Open Supabase Dashboard > SQL Editor and run:
+   supabase/migrations/20261110_project_collaboration.sql
+7. Run `npm run build` locally. Fix/report any build error before deployment.
+8. Run `npm run dev` and test with two separate, already registered and email-confirmed WaleWorks accounts.
+
+FEATURES
+--------
+- Project owners can invite an existing WaleWorks account by its confirmed account email.
+- Invitations appear in the invited user's in-app Notifications and Team invitations page.
+- The invitee explicitly accepts or declines. A pending invite reveals only a limited project title/role preview, not the private project itself.
+- Accepted teammates can access the private project workspace, see the team roster, milestones, contributions and project evidence, post comments, and add their own contribution records.
+- Owners retain control of membership, milestones, project editing and deletion.
+- Owners receive an in-app notification when an invite is accepted or declined.
+- Removing a teammate removes their membership-based access.
+
+IMPORTANT LIMITATIONS
+--------------------
+- Invitations are in-app only. This patch does not send external email. The invitee must already have a WaleWorks account with a confirmed email address.
+- Contributors can view milestones but only the owner can create, complete, or delete them.
+- Contributor project metadata editing is not enabled.
+- This patch does not implement an AI assistant, employer verification, or automatic assessment.
+
+DATABASE SAFETY
+---------------
+The migration is additive and does not drop tables or delete existing project/student data. It creates/replaces narrowly scoped SECURITY DEFINER RPC functions, adds RLS policies for accepted teammates, grants function execution to authenticated users only, and reloads the PostgREST schema cache. Review the SQL before running it. Do not disable RLS.
+
+TWO-ACCOUNT ACCEPTANCE TEST
+---------------------------
+A. Account A (project owner)
+   1. Open one of your projects > Project workspace.
+   2. Invite Account B using the exact confirmed email B uses to sign in.
+   3. Confirm the pending invite appears in the owner roster.
+
+B. Account B (invitee)
+   4. Sign in as B and open Dashboard > Team invitations.
+   5. Accept the invitation.
+   6. Open the workspace, add a comment and save a contribution.
+   7. Confirm B can view milestones and project evidence but cannot edit/delete the project or manage milestones.
+
+C. Account A again
+   8. Confirm the member appears in the team and B's comment/contribution are visible.
+   9. Remove B from the team.
+
+D. Account B again
+  10. Refresh the old workspace URL. It should no longer be accessible as a team workspace.
+
+DEPLOYMENT
+----------
+Only after `npm run build` and the two-account tests pass:
+  git add -A
+  git commit -m "Add consent-based project collaboration"
+  git push origin main
+
+Vercel should deploy the new main-branch commit automatically.

@@ -9,6 +9,7 @@ export const CAREER_PATHS = [
   'AI & Machine Learning',
   'Networking & Infrastructure',
   'Product Management & Business Analysis',
+  'Project Management',
   'Technical Writing',
   'Exploring IT careers',
 ] as const;
@@ -35,6 +36,7 @@ export const CAREER_ROLES_BY_PATH: Record<string, string[]> = {
   'AI & Machine Learning': ['Junior Data / ML Analyst', 'AI Application Developer', 'Machine Learning Engineer', 'MLOps Engineer'],
   'Networking & Infrastructure': ['Junior Network Support Technician', 'Network Engineer', 'Network Administrator', 'Infrastructure Engineer'],
   'Product Management & Business Analysis': ['Junior Business Analyst', 'Product Analyst', 'Associate Product Manager', 'Scrum Master'],
+  'Project Management': ['Junior Project Coordinator', 'Project Coordinator', 'PMO Analyst', 'Associate Project Manager', 'Agile Project Coordinator'],
   'Technical Writing': ['Technical Writer', 'Knowledge Base Specialist', 'Developer Documentation Writer'],
   'Exploring IT careers': ['Exploring IT roles', 'Not sure yet'],
 };

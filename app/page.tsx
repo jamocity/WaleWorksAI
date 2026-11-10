@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   ArrowRight, ArrowUpRight, CheckCircle2, Code2, FileText, Globe2,
@@ -31,7 +32,7 @@ export default function HomePage() {
           <div className="visual-window">
             <div className="visual-window-top"><div className="window-dots"><i /><i /><i /></div><span>app.waleworks.ai / dashboard</span><div className="visual-online"><b /> PRODUCT PREVIEW</div></div>
             <div className="visual-app">
-              <aside className="visual-sidebar"><div className="visual-brand"><span><Layers3 size={14} /></span> WaleWorks</div><div className="visual-sidelabel">WORKSPACE</div><div className="visual-nav active"><i /> Overview</div><div className="visual-nav"><i /> My projects</div><div className="visual-nav"><i /> My profile</div><div className="visual-sidelabel second">DISCOVER</div><div className="visual-nav"><i /> Challenges</div><div className="visual-nav"><i /> AI assistant</div><div className="visual-mini-user"><div>AO</div><span><b>Amara Okafor</b><small>Student workspace</small></span></div></aside>
+              <aside className="visual-sidebar"><div className="visual-brand"><Image src="/brand/waleworks-ai-mark.png" width={24} height={18} alt="" /> WaleWorks AI</div><div className="visual-sidelabel">WORKSPACE</div><div className="visual-nav active"><i /> Overview</div><div className="visual-nav"><i /> My projects</div><div className="visual-nav"><i /> My profile</div><div className="visual-sidelabel second">DISCOVER</div><div className="visual-nav"><i /> Challenges</div><div className="visual-nav"><i /> AI assistant</div><div className="visual-mini-user"><div>AO</div><span><b>Amara Okafor</b><small>Student workspace</small></span></div></aside>
               <div className="visual-main"><div className="visual-greeting"><span>ILLUSTRATIVE STUDENT WORKSPACE</span><b>Good morning, Amara <span>✦</span></b><small>Your work is taking shape. Keep the momentum going.</small></div>
                 <div className="visual-stats"><div><small>PROJECTS</small><b>04</b><span>+2 this semester</span></div><div><small>SKILLS EVIDENCED</small><b>08</b><span>Across 4 projects</span></div><div><small>PORTFOLIO VIEWS</small><b>126</b><span>Last 30 days</span></div></div>
                 <div className="visual-work-head"><b>Recent project work</b><span>View all <ArrowUpRight size={11} /></span></div>

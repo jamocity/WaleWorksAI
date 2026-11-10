@@ -1,9 +1,5 @@
-WALEWORKS AI HOTFIX: Missing work-simulations module
+WaleWorks AI workspace page TypeScript fix
 
-1. Stop the Next.js dev server with Ctrl+C.
-2. Extract this ZIP into the root WaleWorksAI project folder (the same folder that contains package.json).
-3. Allow the lib folder/file to be added. Do not delete or replace your .env.local.
-4. Confirm the file exists at: WaleWorksAI/lib/work-simulations.ts
-5. Restart with: npm run dev
+Extract this ZIP into the project root (the folder containing package.json). It replaces only app/dashboard/projects/[id]/workspace/page.tsx. It keeps the Supabase select string literal for TypeScript inference and fetches pending invitation email addresses separately for the project owner only. No database migration is required.
 
-This hotfix supplies the module imported by app/dashboard/page.tsx.
+Then run: npm run build

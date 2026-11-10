@@ -30,7 +30,7 @@ const { data: profile } = await supabase
   }
 
   return <div className="dashboard-page work-simulations-page">
-    <SectionHeading eyebrow="PRACTICE THE WORK, NOT JUST THE THEORY" title="Workday simulations" description="Step into realistic IT job situations. Make decisions, produce workplace deliverables and learn from the consequences." />
+    <SectionHeading eyebrow="PRACTICE THE WORK, NOT JUST THE THEORY" title="Workday simulations" description="Step into realistic technology and project-delivery situations. Make decisions, produce workplace deliverables and learn from the consequences." />
     <section className="simulation-intro-banner">
       <div className="simulation-intro-icon"><BriefcaseBusiness size={23} /></div>
       <div><span className="eyebrow">A GUIDED WORKPLACE PRACTICE LAB</span><h2>What would your workday actually look like?</h2><p>Start with a realistic brief, follow a workday timeline, handle decisions and submit a deliverable like a ticket update, pull request summary or incident handover.</p></div>
