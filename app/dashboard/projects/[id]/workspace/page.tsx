@@ -4,6 +4,7 @@ import { ArrowLeft, CalendarDays, FolderKanban } from 'lucide-react';
 import { SectionHeading } from '@/components/section-heading';
 import { ProjectWorkboard } from '@/components/project-workboard';
 import { ProjectCollaborationPanel } from '@/components/project-collaboration-panel';
+import { ProjectAIAssistant } from '@/components/project-ai-assistant';
 import { createClient } from '@/lib/supabase/server';
 
 type Milestone = { id: string; title: string; description: string | null; due_date: string | null; completed_at: string | null; position: number; created_at: string };
@@ -76,6 +77,7 @@ export default async function ProjectWorkspacePage({ params }: { params: Promise
   return <div className="dashboard-page project-workspace-page">
     <Link className="back-link" href={`/dashboard/projects/${id}`}><ArrowLeft size={15}/> Back to project</Link>
     <SectionHeading eyebrow="PROJECT WORKSPACE" title={project.title} description="Coordinate with teammates, plan the work, discuss decisions and record each person's contribution." action={<Link href={`/dashboard/projects/${id}`} className="button button-secondary"><FolderKanban size={15}/> Project details</Link>}/>
+    <ProjectAIAssistant projectId={id}/>
     {boardError ? <div className="form-alert error">Some collaboration data could not be loaded: {(boardError as { message?: string }).message ?? 'Check that the project collaboration migration has been applied.'}</div> : <>
       <ProjectCollaborationPanel projectId={id} isOwner={isOwner} members={members} comments={comments}/>
       <ProjectWorkboard projectId={id} userId={user.id} isOwner={isOwner} milestones={(milestoneResponse.data ?? []) as Milestone[]} contributions={(contributionResponse.data ?? []) as Contribution[]}/>

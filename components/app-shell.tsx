@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   Bell, BriefcaseBusiness, ChevronDown, CircleHelp, Compass, FolderKanban,
-  LayoutDashboard, LogOut, Menu, Search, Settings, Sparkles, UserRound, UsersRound, X,
+  LayoutDashboard, LoaderCircle, LogOut, Menu, Search, Settings, Sparkles, UserRound, UsersRound, X,
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Brand } from '@/components/brand';
@@ -19,19 +19,84 @@ const navItems = [
   { href: '/dashboard/invitations', label: 'Team invitations', icon: UsersRound },
 ];
 
-export function AppShell({ profile, children }: { profile: Profile; children: React.ReactNode }) {
+export function AppShell({ profile, children, initialUnreadCount = 0 }: { profile: Profile; children: React.ReactNode; initialUnreadCount?: number }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(initialUnreadCount);
   const [search, setSearch] = useState('');
   const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
 
-  async function signOut() {
-    setSigningOut(true);
+  const refreshUnreadCount = useCallback(async () => {
     const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push('/');
-    router.refresh();
+    const { count, error } = await supabase
+      .from('notifications')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', profile.id)
+      .is('read_at', null);
+
+    if (!error && typeof count === 'number') setUnreadCount(count);
+  }, [profile.id]);
+
+  // Keep the badge current using Realtime when enabled, with polling as a fallback.
+  useEffect(() => {
+    let active = true;
+    const supabase = createClient();
+    const refresh = async () => {
+      const { count, error } = await supabase
+        .from('notifications')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', profile.id)
+        .is('read_at', null);
+      if (active && !error && typeof count === 'number') setUnreadCount(count);
+    };
+
+    void refresh();
+    const channel = supabase
+      .channel(`notification-badge-${profile.id}`)
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'notifications',
+        filter: `user_id=eq.${profile.id}`,
+      }, () => { void refresh(); })
+      .subscribe();
+
+    const interval = window.setInterval(() => { void refresh(); }, 30000);
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') void refresh();
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      active = false;
+      window.clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      void supabase.removeChannel(channel);
+    };
+  }, [profile.id]);
+
+  useEffect(() => {
+    void refreshUnreadCount();
+  }, [pathname, refreshUnreadCount]);
+
+  async function signOut() {
+    if (signingOut) return;
+    setSigningOut(true);
+    setSignOutError(null);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      setMobileOpen(false);
+      router.replace('/auth/login');
+      router.refresh();
+    } catch (error) {
+      console.error('WaleWorks sign-out failed:', error);
+      setSignOutError('Could not sign out. Please try again.');
+      setSigningOut(false);
+    }
   }
 
   function submitSearch(event: React.FormEvent<HTMLFormElement>) {
@@ -69,8 +134,18 @@ export function AppShell({ profile, children }: { profile: Profile; children: Re
         <div className="sidebar-user">
           <Avatar name={profile.full_name} image={profile.avatar_url} size="sm" />
           <div className="sidebar-user-copy"><strong>{profile.full_name || 'Student'}</strong><small>{profile.department || 'Student account'}</small></div>
-          <button className="icon-button logout-button" title="Sign out" aria-label="Sign out" onClick={signOut} disabled={signingOut}><LogOut size={16} /></button>
         </div>
+        <button
+          type="button"
+          className="sidebar-signout-button"
+          onClick={signOut}
+          disabled={signingOut}
+          aria-label={signingOut ? 'Signing out' : 'Log out'}
+        >
+          {signingOut ? <LoaderCircle size={16} className="spin" /> : <LogOut size={16} />}
+          <span>{signingOut ? 'Signing out…' : 'Log out'}</span>
+        </button>
+        {signOutError && <p className="sidebar-signout-error" role="alert">{signOutError}</p>}
       </div>
     </>
   );
@@ -83,7 +158,7 @@ export function AppShell({ profile, children }: { profile: Profile; children: Re
         <header className="app-topbar">
           <button className="icon-button mobile-menu-button" aria-label={mobileOpen ? 'Close menu' : 'Open menu'} onClick={() => setMobileOpen(!mobileOpen)}>{mobileOpen ? <X size={20} /> : <Menu size={20} />}</button>
           <form className="topbar-search" onSubmit={submitSearch}><Search size={17} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search your projects..." /><kbd>⌘ K</kbd></form>
-          <div className="topbar-actions"><Link className="icon-button notification-button" href="/dashboard/notifications" aria-label="Notifications"><Bell size={18} /></Link><div className="topbar-divider" /><Link className="topbar-profile" href="/dashboard/profile"><Avatar name={profile.full_name} image={profile.avatar_url} size="sm" /><span>{profile.full_name?.split(' ')[0] || 'Profile'}</span></Link></div>
+          <div className="topbar-actions"><Link className="icon-button notification-button" href="/dashboard/notifications" aria-label={unreadCount > 0 ? `Notifications, ${unreadCount} unread` : 'Notifications'} title={unreadCount > 0 ? `${unreadCount} unread notification${unreadCount === 1 ? '' : 's'}` : 'Notifications'}><Bell size={18} />{unreadCount > 0 && <span className="notification-count" aria-hidden="true">{unreadCount > 99 ? '99+' : unreadCount}</span>}</Link><div className="topbar-divider" /><Link className="topbar-profile" href="/dashboard/profile"><Avatar name={profile.full_name} image={profile.avatar_url} size="sm" /><span>{profile.full_name?.split(' ')[0] || 'Profile'}</span></Link></div>
         </header>
         <main className="app-content">{children}</main>
       </div>

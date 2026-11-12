@@ -27,7 +27,7 @@ An IT-career practice and evidence platform. Students choose a technology career
 
 - Workday Simulations are an initial, curated practice module. Future iterations can add more roles, daily schedules, branching consequences, mentor feedback, AI-assisted feedback and employer-authored scenarios with clear review and verification labels. These scenarios are practice—not live employment, internships or professional certification.
 - Phase 2: invitations, team workspaces, contribution log, milestone management, comments and mentor feedback workflows. The current schema only allows project owners to create pending invitations; client-side acceptance is disabled until invitee consent is implemented.
-- Phase 3: server-side AI documentation assistant, structured assessment rubrics, skills extraction and improvement recommendations. AI assessment records are intentionally write-restricted to trusted server-side service-role code; there is no fabricated AI scoring in this MVP.
+- Phase 3: the server-side AI Project Assistant is now available inside project workspaces when a local Ollama provider is running in development or an optional cloud provider is configured in production. Structured AI assessment rubrics, persisted assessment records, skills scoring and human-review workflows remain future work. AI assessment records are intentionally write-restricted to trusted server-side service-role code; there is no fabricated AI scoring in this MVP.
 - Phase 4: challenge publishing/submissions, employer accounts, student discovery and professional contact workflows.
 
 The landing page's workspace illustration is sample UI data only. `lib/data.ts` contains illustrative sample profile/project records for future preview or test fixtures; they are not inserted as real users or assessments. The only database seed is Wale University directory data and a starter skill taxonomy.
@@ -88,7 +88,7 @@ The landing page's workspace illustration is sample UI data only. `lib/data.ts` 
 - Base `profiles` rows are owner-only. Public portfolios query the restricted `public_profiles` view, which filters academic details, skills/interests, achievements and certifications according to section visibility before returning them. `profile_private` holds contact email under owner-only RLS; the view returns it only when the student explicitly enables email display.
 - `project-assets` is private. Objects use `<owner_uuid>/<project_uuid>/<filename>` paths and policies check the authenticated owner/project. Project assets are exposed through short-lived signed URLs only when the requesting session has RLS access.
 - `avatars` is a public image bucket; upload policies restrict writes to the owning user's folder.
-- Structured skill evidence, AI assessments and human reviews are not publicly readable in Phase 1. AI assessment writes and human-review creation are reserved for trusted server-side workflows in later phases.
+- The AI Project Assistant is a separate coaching tool. It does not write to project records or assessments. Structured AI assessments and human-review creation remain reserved for trusted server-side workflows. Assistant conversations are not persisted; only a per-user daily request counter is stored.
 
 ## Main routes
 
@@ -149,3 +149,9 @@ The onboarding flow now records both broad IT career areas (`career_interests`) 
 For an existing Supabase project created before target-role selection was added, run `supabase/migrations/20261109_target_roles.sql` once in the Supabase SQL Editor. Do not rerun the original schema on a database that already contains live student data.
 
 The current catalogue includes guided fictional workday simulations for IT support, software development, data analytics, cybersecurity, QA, cloud/DevOps, UI/UX, networking, AI/ML and product/business analysis. Each scenario includes workplace context, a day timeline, decision questions, explanations and a written deliverable. Scores are rule-based learning feedback, not professional certification, human verification or proof of employment. Written deliverables are stored but are not automatically graded in this MVP.
+
+## AI Project Assistant (hybrid, zero-cost-first)
+
+The Project Assistant is available inside an authenticated project workspace. In local development it can use Ollama on the same computer as the Next.js server. The deployed Vercel app remains AI-disabled unless an optional Groq cloud key is explicitly configured; this avoids unexpected provider charges. No API SDK dependency is required.
+
+Before activating the feature, run `supabase/migrations/20261111_project_ai_assistant.sql` once in the existing Supabase SQL Editor. The migration adds an RLS-protected daily usage counter (10 request attempts per student per UTC day). It stores counts only, never conversations or project content. Follow `docs/AI_ASSISTANT_SETUP.md` for local Ollama and optional production configuration. Project details are only included in model prompts after a student enables the separate context-sharing option; Groq requires an additional cloud-processing consent. The assistant does not make project edits, invent achievements, or certify skills.

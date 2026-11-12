@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   ArrowRight, ArrowUpRight, CheckCircle2, Code2, FileText, Globe2,
-  Layers3, LockKeyhole, ShieldCheck, Sparkles, Users2,
+  Layers3, LockKeyhole, ShieldCheck, Sparkles, Users2, Compass, BriefcaseBusiness, FolderKanban,
 } from 'lucide-react';
 import { Brand } from '@/components/brand';
 
@@ -16,7 +16,7 @@ export default function HomePage() {
   return (
     <main className="marketing-page">
       <header className="marketing-header">
-        <div className="marketing-header-inner"><Brand /><nav><a href="#how-it-works">How it works</a><a href="#why-waleworks">Why WaleWorks</a><Link href="/auth/login">Sign in</Link></nav><Link href="/auth/signup" className="button button-primary button-header">Create your portfolio <ArrowRight size={15} /></Link></div>
+        <div className="marketing-header-inner"><Brand /><nav><a href="#how-it-works">How it works</a><a href="#why-waleworks">Why WaleWorks</a><Link href="/try">Try it free</Link><Link href="/auth/login">Sign in</Link></nav><Link href="/auth/signup" className="button button-primary button-header">Create your portfolio <ArrowRight size={15} /></Link></div>
       </header>
 
       <section className="hero-section">
@@ -25,7 +25,7 @@ export default function HomePage() {
           <div className="pilot-pill"><span className="pilot-dot" /> Built for the next generation of builders <span>·</span> Wale University pilot</div>
           <h1>Your CV tells them<br />what you <span>know.</span><br />Your work shows what<br />you can <span className="hero-highlight">do.</span></h1>
           <p className="hero-description">A living portfolio for student projects, practical skills and real-world problem solving. Build evidence of your ability while you are still learning.</p>
-          <div className="hero-actions"><Link href="/auth/signup" className="button button-primary button-large">Start building your portfolio <ArrowRight size={18} /></Link><a href="#how-it-works" className="hero-text-link">See how it works <ArrowUpRight size={16} /></a></div>
+          <div className="hero-actions"><Link href="/try" className="button button-primary button-large">Try WaleWorks — no sign-up <ArrowRight size={18} /></Link><Link href="/auth/signup" className="hero-text-link">Create your account <ArrowUpRight size={16} /></Link></div>
           <div className="hero-trust-row"><span><ShieldCheck size={15} /> You control what is public</span><span><LockKeyhole size={15} /> Private by default for projects</span><span><Globe2 size={15} /> Built for every discipline</span></div>
         </div>
         <div className="hero-visual" aria-label="Preview of the WaleWorks student workspace">
@@ -50,6 +50,15 @@ export default function HomePage() {
 
       <section className="manifesto-section" id="why-waleworks">
         <div className="manifesto-number">01 / THE GAP</div><div className="manifesto-copy"><p className="eyebrow">THE PROBLEM WE ARE SOLVING</p><h2>Learning is happening.<br /><span>Proof is often missing.</span></h2><p>Students complete research, build prototypes, solve problems, lead teams and learn by doing. But much of that work stays buried in folders, group chats and assignment submissions.</p><p>WaleWorks gives practical learning a permanent home — so students can document what they build, make their contribution visible and show the thinking behind the result.</p></div>
+      </section>
+
+      <section className="guest-invite-section">
+        <div className="guest-invite-heading"><p className="eyebrow">NO COMMITMENT. JUST TRY IT.</p><h2>Experience the workspace<br /><span>before you sign up.</span></h2><p>Explore the parts of WaleWorks that help turn learning into evidence. Try them first; create an account only when you are ready to keep your work.</p><Link href="/try" className="button button-primary button-large">Open the free playground <ArrowRight size={16} /></Link></div>
+        <div className="guest-invite-cards">
+          <article><span><Compass size={19} /></span><b>Explore a career path</b><p>Choose a direction and preview roles, skills and learning steps.</p><small>NO ACCOUNT REQUIRED</small></article>
+          <article><span><BriefcaseBusiness size={19} /></span><b>Try a workday challenge</b><p>Make decisions in a realistic workplace scenario and get feedback.</p><small>NO ACCOUNT REQUIRED</small></article>
+          <article><span><FolderKanban size={19} /></span><b>Preview a project</b><p>Shape a project card and see how practical work can be presented.</p><small>NO ACCOUNT REQUIRED</small></article>
+        </div>
       </section>
 
       <section className="how-section" id="how-it-works"><div className="section-kicker">02 / THE PRODUCT</div><div className="how-heading"><div><p className="eyebrow">A BETTER WAY TO SHOW YOUR WORK</p><h2>From classwork to<br /><span>career evidence.</span></h2></div><p>Not another course platform. Not another job board. A practical record of what you can do, how you think and what you are learning to build.</p></div><div className="steps-grid">{steps.map((step) => <article className="step-card" key={step.number}><span>{step.number}</span><div className="step-line" /><h3>{step.title}</h3><p>{step.description}</p></article>)}</div></section>

@@ -21,7 +21,7 @@ function getErrorMessage(error: unknown) {
   return 'Could not save your profile. Please try again.';
 }
 
-export function ProfileForm({ profile, onboarding = false, initialContactEmail = '' }: { profile: Profile; onboarding?: boolean; initialContactEmail?: string }) {
+export function ProfileForm({ profile, onboarding = false, initialContactEmail = '', initialCareerPath = '', initialTargetRole = '' }: { profile: Profile; onboarding?: boolean; initialContactEmail?: string; initialCareerPath?: string; initialTargetRole?: string }) {
   const [fullName, setFullName] = useState(profile.full_name ?? '');
   const [username, setUsername] = useState(profile.username ?? '');
   const [university, setUniversity] = useState(profile.university ?? 'Wale University');
@@ -37,10 +37,16 @@ export function ProfileForm({ profile, onboarding = false, initialContactEmail =
   const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url ?? '');
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [avatarNotice, setAvatarNotice] = useState('');
-  const [careerInterests, setCareerInterests] = useState<string[]>(profile.career_interests ?? []);
-  const [primaryCareerPath, setPrimaryCareerPath] = useState(profile.primary_career_path ?? '');
+  const [careerInterests, setCareerInterests] = useState<string[]>(() => {
+    const existing = profile.career_interests ?? [];
+    return initialCareerPath && !existing.includes(initialCareerPath) ? [...existing, initialCareerPath] : existing;
+  });
+  const [primaryCareerPath, setPrimaryCareerPath] = useState(profile.primary_career_path || initialCareerPath || '');
   const [careerStage, setCareerStage] = useState(profile.career_stage ?? 'exploring');
-  const [targetRoles, setTargetRoles] = useState<string[]>(profile.target_roles ?? []);
+  const [targetRoles, setTargetRoles] = useState<string[]>(() => {
+    const existing = profile.target_roles ?? [];
+    return initialTargetRole && !existing.includes(initialTargetRole) ? [...existing, initialTargetRole] : existing;
+  });
   const router = useRouter();
   const [careerGoal, setCareerGoal] = useState(profile.career_goal ?? '');
   const [isPublic, setIsPublic] = useState(profile.is_public);

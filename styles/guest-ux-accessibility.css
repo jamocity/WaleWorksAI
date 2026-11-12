@@ -1,0 +1,564 @@
+/* WALEWORKS GUEST EXPERIENCE + APP-WIDE READABILITY UPGRADE */
+
+/* Shared application typography: stronger contrast and comfortable reading size. */
+body {
+  color: #172640;
+  font-size: 16px;
+  -webkit-font-smoothing: auto;
+}
+
+.eyebrow {
+  color: #4f607b;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.section-description {
+  color: #53627b;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.button {
+  min-height: 44px;
+  font-size: 14px;
+}
+
+.field-label {
+  color: #293a56;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.field-label small,
+.field-label em {
+  color: #586983;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.text-input {
+  min-height: 46px;
+  color: #1d2d49;
+  font-size: 14px;
+}
+
+.text-input::placeholder {
+  color: #77859b;
+  opacity: 1;
+}
+
+.form-alert {
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.nav-link {
+  min-height: 43px;
+  color: #465671;
+  font-size: 13px;
+}
+
+.sidebar-section-label {
+  color: #64738b;
+  font-size: 10px;
+}
+
+.nav-coming {
+  color: #596982;
+  font-size: 9px;
+}
+
+.workspace-copy strong,
+.sidebar-user-copy strong {
+  color: #2c3c58;
+  font-size: 12px;
+}
+
+.workspace-copy small,
+.sidebar-user-copy small {
+  color: #596983;
+  font-size: 10px;
+}
+
+.topbar-profile {
+  color: #40516c;
+  font-size: 12px;
+}
+
+.welcome-date {
+  color: #53627b;
+  font-size: 10px;
+}
+
+.stat-label {
+  color: #53627b;
+  font-size: 10px;
+}
+
+.stat-card > small {
+  color: #596983;
+  font-size: 11px;
+}
+
+.content-section-heading > a {
+  font-size: 12px;
+}
+
+.category-label,
+.visibility-chip {
+  color: #596983;
+  font-size: 10px;
+}
+
+.project-card-title h3 {
+  font-size: 15px;
+}
+
+/* Guest Playground: make instructional text readable without zooming. */
+.guest-playground-page {
+  color: #172640;
+  font-size: 16px;
+}
+
+.guest-eyebrow {
+  color: #53627b;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.guest-hero-copy h1 {
+  font-size: clamp(48px, 5.3vw, 68px);
+  letter-spacing: -2.7px;
+  line-height: 1.08;
+}
+
+.guest-hero-copy > p {
+  color: #465671;
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.guest-hero-points {
+  color: #465671;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.guest-hero-card-top {
+  color: #465671;
+  font-size: 11px;
+}
+
+.guest-preview-stat-row small {
+  color: #5a6a84;
+  font-size: 11px;
+}
+
+.guest-preview-stat-row b {
+  font-size: 23px;
+}
+
+.guest-preview-flow b {
+  color: #263956;
+  font-size: 15px;
+}
+
+.guest-preview-flow small {
+  color: #596983;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.guest-playground-heading h2 {
+  font-size: clamp(28px, 3vw, 36px);
+}
+
+.guest-playground-heading > div > p:last-child {
+  color: #53627b;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.guest-session-pill {
+  color: #4b5d79;
+  font-size: 12px;
+}
+
+.guest-tab-list button {
+  min-height: 48px;
+  color: #40516d;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.guest-tool-panel {
+  padding: 30px;
+}
+
+.guest-panel-heading h3 {
+  color: #192b49;
+  font-size: 23px;
+  line-height: 1.3;
+}
+
+.guest-panel-heading p:not(.eyebrow) {
+  color: #53627b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.guest-no-save {
+  color: #53627b;
+  font-size: 10px;
+}
+
+.guest-career-controls,
+.guest-workday-selectors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  max-width: 850px;
+  padding: 24px 0;
+}
+
+.guest-career-controls .field-label,
+.guest-workday-selectors .field-label,
+.guest-project-fields .field-label {
+  color: #263752;
+  font-size: 14px;
+}
+
+.guest-result-kicker {
+  color: #4e607b;
+  font-size: 11px;
+  letter-spacing: .9px;
+}
+
+.guest-career-summary {
+  padding: 22px;
+}
+
+.guest-career-summary h4 {
+  color: #1c3154;
+  font-size: 23px;
+}
+
+.guest-career-summary p {
+  color: #4f607a;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.guest-career-columns h5,
+.guest-stage-preview h5 {
+  color: #293b58;
+  font-size: 15px;
+}
+
+.guest-career-columns ul {
+  color: #4d5e78;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.guest-chip-list span {
+  color: #40516b;
+  font-size: 12px;
+}
+
+.guest-stage-list b {
+  color: #2c3d59;
+  font-size: 14px;
+}
+
+.guest-stage-list p {
+  color: #53627b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.guest-panel-footer > span {
+  color: #53627b;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.guest-career-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.guest-empty-state b,
+.guest-project-preview-empty b {
+  color: #2b3d59;
+  font-size: 15px;
+}
+
+.guest-empty-state p,
+.guest-project-preview-empty p {
+  color: #53627b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.guest-scenario-brief {
+  padding: 20px 22px;
+}
+
+.guest-scenario-brief p {
+  color: #3f506b;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.guest-scenario-brief small {
+  color: #5b6b84;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.guest-question-progress {
+  color: #53627b;
+  font-size: 12px;
+}
+
+.guest-question-card h4 {
+  color: #1e304d;
+  font-size: 20px;
+  line-height: 1.55;
+}
+
+.guest-answer-option {
+  padding: 15px 16px;
+  color: #354760;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.guest-answer-feedback b {
+  color: #263c5b;
+  font-size: 14px;
+}
+
+.guest-answer-feedback p {
+  color: #41536e;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.guest-workday-result h4 {
+  color: #263a58;
+  font-size: 19px;
+}
+
+.guest-workday-result > p:last-of-type {
+  color: #53627b;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.guest-project-preview-top {
+  color: #53627b;
+  font-size: 11px;
+}
+
+.guest-project-preview-card h4 {
+  color: #223653;
+  font-size: 20px;
+}
+
+.guest-project-preview-card > p:not(.eyebrow) {
+  color: #4f607a;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.guest-project-preview-bottom {
+  color: #5a6a82;
+  font-size: 11px;
+}
+
+.guest-conversion-band h2 {
+  font-size: 27px;
+}
+
+.guest-conversion-band p:last-child {
+  color: #e0e8f6;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.guest-playground-footer > span,
+.guest-playground-footer > a {
+  color: #53627b;
+  font-size: 12px;
+}
+
+.guest-playground-footer > small {
+  color: #596983;
+  font-size: 11px;
+}
+
+@media (max-width: 700px) {
+  .guest-hero-copy h1 {
+    font-size: clamp(40px, 10vw, 54px);
+    letter-spacing: -1.8px;
+  }
+
+  .guest-hero-copy > p {
+    font-size: 16px;
+  }
+
+  .guest-hero-points {
+    font-size: 12px;
+  }
+
+  .guest-playground-heading > div > p:last-child {
+    font-size: 14px;
+  }
+
+  .guest-tab-list button {
+    min-height: 52px;
+    font-size: 12px;
+  }
+
+  .guest-tool-panel {
+    padding: 18px;
+  }
+
+  .guest-panel-heading h3 {
+    font-size: 20px;
+  }
+
+  .guest-panel-heading p:not(.eyebrow) {
+    font-size: 13px;
+  }
+
+  .guest-career-controls,
+  .guest-workday-selectors {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .guest-question-card h4 {
+    font-size: 18px;
+  }
+
+  .guest-answer-option {
+    font-size: 14px;
+  }
+
+  .guest-career-actions {
+    width: 100%;
+  }
+
+  .guest-career-actions .button {
+    width: 100%;
+  }
+}
+
+/* Public portfolios, project workspaces and AI output should also read comfortably. */
+.app-content p:not(.eyebrow),
+.public-portfolio-page p:not(.eyebrow),
+.public-project-page p:not(.eyebrow) {
+  color: #4d5e78;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.app-content small {
+  color: #586983;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.public-portfolio-header > span,
+.public-portfolio-footer > span,
+.public-portfolio-footer > a {
+  color: #53637d;
+  font-size: 11px;
+}
+
+.public-profile-identity > p {
+  color: #4d5e78;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.public-profile-meta span {
+  color: #52627b;
+  font-size: 11px;
+}
+
+.public-verified-label {
+  color: #52627b;
+  font-size: 10px;
+}
+
+.public-about > p,
+.public-section-heading > div > p:last-child,
+.public-project-summary {
+  color: #4d5e78;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.public-academic-row strong,
+.public-project-owner strong {
+  color: #40516c;
+  font-size: 12px;
+}
+
+.public-academic-row small,
+.public-project-owner small {
+  color: #596983;
+  font-size: 11px;
+}
+
+.project-ai-message p,
+.project-ai-empty p,
+.project-ai-setup-note p {
+  color: #3f506b;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.project-ai-message small,
+.project-ai-provider-chip,
+.project-ai-quota-row,
+.project-ai-form-footer > span,
+.project-ai-disclaimer {
+  color: #53637c;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.project-ai-empty b,
+.project-ai-setup-note b,
+.project-ai-checkbox b {
+  color: #293b58;
+  font-size: 13px;
+}
+
+.project-ai-checkbox small {
+  color: #53637b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.project-ai-action {
+  color: #40536f;
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .public-profile-identity > p {
+    font-size: 14px;
+  }
+
+  .public-profile-meta span {
+    font-size: 11px;
+  }
+}

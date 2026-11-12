@@ -1,0 +1,52 @@
+WALEWORKS AI — PROJECT ASSISTANT UPDATE
+
+This is a source patch for the current WaleWorks AI project. It adds an AI assistant inside each authenticated project workspace, with local Ollama for development and an optional Groq cloud provider for production.
+
+BEFORE INSTALLING
+1. Back up your current project folder.
+2. Do not replace .env.local and never upload it to GitHub.
+3. This patch adds no npm packages.
+
+FILES
+- app/api/projects/[id]/assistant/route.ts
+- app/dashboard/projects/[id]/workspace/page.tsx
+- app/dashboard/page.tsx
+- app/globals.css
+- components/project-ai-assistant.tsx
+- supabase/migrations/20261111_project_ai_assistant.sql
+- docs/AI_ASSISTANT_SETUP.md
+- .env.ai.example
+- README.md
+
+INSTALL
+1. Stop the local Next.js server with Ctrl+C.
+2. Extract the ZIP directly into C:\Users\Jamiu\Documents\WaleWorksAI (the folder containing package.json).
+3. Merge folders and replace the matching files.
+4. Keep .env.local unchanged.
+
+DATABASE
+Run supabase/migrations/20261111_project_ai_assistant.sql once in your existing Supabase project's SQL Editor. It creates an RLS-protected usage-count table and two authenticated RPC functions. It does not store conversations or project content. Do not rerun schema.sql.
+
+LOCAL ZERO-API-COST MODE
+1. Make sure Ollama is installed and running on the same computer as Next.js.
+2. Run: ollama pull llama3.2:3b
+3. Append the following to the existing .env.local:
+   WALEWORKS_AI_PROVIDER=ollama
+   OLLAMA_BASE_URL=http://127.0.0.1:11434
+   OLLAMA_MODEL=llama3.2:3b
+4. Restart npm run dev.
+5. Open a project, choose Project workspace, and use AI Project Assistant.
+
+PRODUCTION
+The Vercel deployment intentionally makes no AI provider call until a cloud key is explicitly configured. Local Ollama on your computer is not reachable from Vercel. If you later choose to enable Groq, configure WALEWORKS_AI_PROVIDER=groq, GROQ_API_KEY and GROQ_MODEL as server-side Production environment variables in Vercel, then redeploy. Check current model availability and pricing before enabling it. Never use NEXT_PUBLIC_ for the provider key.
+
+PRIVACY
+Project details are not sent unless the student enables Share project details. Uploaded files, external links, comments and teammate records are never included. Groq calls require separate cloud-processing consent. Assistant conversations are page-local and are not saved. The assistant suggests; it does not edit projects or certify skills.
+
+VALIDATION
+Run npm run typecheck, npm run lint and npm run build locally before pushing. After tests pass:
+  git add -A
+  git commit -m "Add zero-cost-first AI project assistant"
+  git push origin main
+
+Vercel should automatically deploy the new commit. Since cloud AI remains disabled without the optional key, the deployed assistant will show that it is not connected rather than generating placeholder responses.

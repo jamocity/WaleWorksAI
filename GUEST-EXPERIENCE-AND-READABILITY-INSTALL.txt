@@ -1,0 +1,54 @@
+WALEWORKS AI — GUEST CAREER PRACTICE + READABILITY UPGRADE
+
+WHAT THIS UPDATE CHANGES
+1. Guests can choose any career direction already listed in lib/career-paths.ts.
+2. Guests can choose a role and get a workday scenario matched to that career direction.
+3. Existing full workday simulations are reused for their matching career tracks.
+4. A short Technical Writing scenario is included for that career direction.
+5. A general cross-team IT handover scenario is included for guests who choose "Exploring IT careers".
+6. Career Explorer has a direct action to open a workday for the selected direction.
+7. Choosing a different career or role resets the previous guest answers and score.
+8. Text readability is improved across the application and especially across the Guest Playground: larger body text, stronger contrast, clearer labels, and more readable decision options.
+
+NO DATABASE MIGRATION IS REQUIRED.
+NO NEW NPM PACKAGE IS REQUIRED.
+NO AI API OR PAID SERVICE IS USED.
+Guest answers remain in the current browser session and are not written to Supabase.
+
+INSTALLATION
+1. Back up the current WaleWorksAI project folder.
+2. Stop the development server with Ctrl+C.
+3. Extract this ZIP directly into the project root:
+   C:\Users\Jamiu\Documents\WaleWorksAI
+   (the folder that contains package.json)
+4. Merge folders if Windows asks.
+5. Do not replace .env.local.
+6. Open PowerShell in the project root and run:
+   powershell -ExecutionPolicy Bypass -File .\apply-guest-ux-upgrade.ps1
+7. The script appends the readability CSS only once. It will not duplicate the styles if run again.
+8. Run:
+   npm run build
+9. Start locally:
+   npm run dev
+
+TESTING
+A. Open http://localhost:3000/try
+B. Open Career Explorer and select each career direction in turn.
+C. Confirm role options and roadmap details appear.
+D. Select "Practice a workday in this direction".
+E. Confirm the scenario title, brief, role and three questions match the selected career direction.
+F. Test Technical Writing and Exploring IT careers; these use guest-specific short scenarios.
+G. Change to another career while in the workday tab. Confirm previous answers and scores reset.
+H. Complete all three decisions and confirm the score is shown.
+I. Check readability at normal browser zoom on desktop and mobile. Labels should be legible and body copy should no longer be tiny or pale.
+J. Confirm signup links still carry careerPath and targetRole.
+
+DEPLOYMENT
+Only after npm run build succeeds and the guest flow passes:
+  git add -A
+  git commit -m "Improve guest career practice and app readability"
+  git push origin main
+Vercel should deploy the pushed main branch automatically.
+
+IMPORTANT
+The workday scenarios in the guest preview are short, educational samples, not saved attempts or employment assessments. Existing full workday simulation content is reused where available. Technical Writing and Exploring IT careers use guest-only sample scenarios until full simulations are created for those paths.

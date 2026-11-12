@@ -1,0 +1,80 @@
+WALEWORKS AI — GUEST PLAYGROUND UPDATE
+======================================
+
+WHAT THIS ADDS
+--------------
+- A prominent “Try WaleWorks — no sign-up” path from the landing page.
+- A public /try page with three interactive previews:
+  1. Career explorer: select one of the 12 career directions, select a role,
+     and preview foundational skills, tools and roadmap stages.
+  2. Mini workday: complete three decisions from the existing IT Support
+     morning-queue simulation and receive rule-based feedback and a score.
+  3. Project preview: enter a project title, problem statement and skills to
+     render a temporary portfolio-style project card.
+- Guest activity remains in browser component state. It is not written to
+  Supabase, does not create anonymous accounts, and does not call any AI API.
+- When a visitor chooses to register from the career explorer or workday
+  result, the selected career path and role are passed through signup and
+  prefilled in onboarding. The values are validated against the app's current
+  career path and role lists before being applied.
+
+INSTALL
+-------
+1. Back up your current WaleWorksAI folder.
+2. Stop `npm run dev` with Ctrl+C.
+3. Extract this ZIP directly into the project root:
+   C:\Users\Jamiu\Documents\WaleWorksAI
+4. Merge folders and replace the matching files when prompted.
+5. Do NOT replace .env.local. This patch does not include environment files.
+6. No Supabase SQL migration or new npm package is required.
+
+FILES UPDATED / ADDED
+--------------------
+Updated:
+- app/page.tsx
+- app/globals.css
+- components/auth-form.tsx
+- components/profile-form.tsx
+- app/onboarding/page.tsx
+
+Added:
+- app/try/page.tsx
+- components/guest-playground.tsx
+
+TEST LOCALLY
+------------
+From the project root:
+
+  npm run build
+  npm run dev
+
+Then test:
+- Open http://localhost:3000 and click “Try WaleWorks — no sign-up”.
+- Open http://localhost:3000/try directly in a private/incognito window.
+- Career explorer: choose Project Management or another direction; verify
+  the relevant role, skills, tools and learning stages appear.
+- Mini workday: answer all three questions, inspect feedback, finish and reset.
+- Project preview: edit the title/problem/skills and render the preview card.
+- From Career Explorer, select a path and role, click Continue with this
+  direction, create a test account, and confirm onboarding preselects that
+  career path and role. Test the email-confirmation flow if confirmation is
+  enabled in Supabase.
+- Confirm that the /try page works without signing in.
+
+IMPORTANT BEHAVIOUR
+-------------------
+Guest entries are previews only and are not saved. The workday uses a short,
+rule-based sample of the existing IT Support simulation; it does not create
+saved attempts or represent a human-reviewed assessment. A real account is
+required to save projects, workday attempts, profile information, uploads,
+team collaboration and other private workspace data.
+
+DEPLOY
+------
+Only after `npm run build` succeeds and the local tests pass:
+
+  git add -A
+  git commit -m "Add no-signup guest playground"
+  git push origin main
+
+Vercel should then deploy from the connected main branch.

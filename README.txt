@@ -1,5 +1,8 @@
-WaleWorks AI workspace page TypeScript fix
+WaleWorks AI guest-workday and readability update
 
-Extract this ZIP into the project root (the folder containing package.json). It replaces only app/dashboard/projects/[id]/workspace/page.tsx. It keeps the Supabase select string literal for TypeScript inference and fetches pending invitation email addresses separately for the project owner only. No database migration is required.
+Extract into the project root (same directory as package.json), then run:
+  powershell -ExecutionPolicy Bypass -File .\apply-guest-ux-upgrade.ps1
 
-Then run: npm run build
+The patch replaces components/guest-playground.tsx, adds lib/guest-workdays.ts, and appends styles/guest-ux-accessibility.css to app/globals.css.
+No database changes or dependencies are required.
+See GUEST-EXPERIENCE-AND-READABILITY-INSTALL.txt for the full test checklist.

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, LoaderCircle, LockKeyhole, Mail, UserRound } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { CAREER_PATHS, CAREER_ROLES_BY_PATH } from '@/lib/career-paths';
 
 export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
   const router = useRouter();
@@ -15,6 +16,21 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
+  function getOnboardingDestination() {
+    const params = new URLSearchParams(window.location.search);
+    const requestedPath = params.get('careerPath') ?? '';
+    const requestedRole = params.get('targetRole') ?? '';
+    const careerPath = CAREER_PATHS.find((path) => path === requestedPath) ?? '';
+    const targetRole = careerPath && (CAREER_ROLES_BY_PATH[careerPath] ?? []).includes(requestedRole)
+      ? requestedRole
+      : '';
+    const nextParams = new URLSearchParams();
+    if (careerPath) nextParams.set('careerPath', careerPath);
+    if (targetRole) nextParams.set('targetRole', targetRole);
+    const query = nextParams.toString();
+    return query ? `/onboarding?${query}` : '/onboarding';
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError('');
@@ -23,17 +39,18 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
     try {
       const supabase = createClient();
       if (mode === 'signup') {
+        const onboardingDestination = getOnboardingDestination();
         const { data, error: authError } = await supabase.auth.signUp({
           email,
           password,
           options: {
             data: { full_name: fullName.trim() },
-            emailRedirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(onboardingDestination)}`,
           },
         });
         if (authError) throw authError;
         if (data.session) {
-          router.push('/onboarding');
+          router.push(onboardingDestination);
           router.refresh();
         } else {
           setMessage('Your account has been created. Check your email to confirm your address, then sign in to continue.');
